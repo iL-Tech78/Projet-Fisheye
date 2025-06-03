@@ -43,6 +43,9 @@ async function init() {
     photographerModel.getUserHeaderDOM();
     photographerModel.getUserPriceDOM();
 
+    const photographerNameElement = document.getElementById('photographer-name');
+    photographerNameElement.textContent = data.name;
+    
     const mediaSection = document.querySelector('.media_section');
 
     media.forEach((m) => {
