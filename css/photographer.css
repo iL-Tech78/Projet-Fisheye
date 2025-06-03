@@ -1,11 +1,61 @@
-#contact_modal {
-    display: none;
+/* === header start === */
+.photograph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FAFAFA;
+    margin: 50px 100px;
+    padding: 50px;
+    border-radius: 10px;
+}
+.photograph-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.photograph-header {
-    background-color: #FAFAFA;
-    height: 300px;
-    margin: 0 100px;
+.photograph-info h1 {
+    font-size: 64px;
+    color: #D3573C;
+    margin: 0;
+}
+
+.photographer-location {
+    font-size: 24px;
+    color: #901C1C;
+    margin: 10px 0 0;
+}
+
+.photographer-tagline {
+    font-size: 18px;
+    color: #525252;
+    margin-top: 5px;
+}
+
+.photograph-info h1,
+.photographer-location,
+.photographer-tagline {
+    font-weight: 400;
+}
+
+.contact_button {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    padding: 11px;
+    width: 170px;
+    height: 69px;
+    border: none;
+    background-color: #901C1C;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.photograph-header img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .contact_button {
@@ -19,6 +69,13 @@
     background-color: #901C1C;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/* === header end === */
+/* === modal start === */
+
+#contact_modal {
+    display: none;
 }
 
 .modal {
@@ -74,3 +131,61 @@ form input {
     border: none;
     border-radius: 5px;
 }
+/* === modal end === */
+
+/* === media start === */
+.media_section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 50px 100px;
+}
+
+.media_section article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.media_section img,
+.media_section video {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.media_section h2 {
+    font-size: 20px;
+    margin: 10px;
+    color: #901C1C;
+    text-align: center;
+}
+
+.media_section .media-footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.media_section .media-footer h2 {
+    font-size: 20px;
+    color: #901C1C;
+    margin: 0;
+}
+
+.media_section .likes {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #901C1C;
+}
+
+.media_section .likes i {
+    margin-left: 5px;
+    cursor: pointer;
+}
+/* === modal end === */

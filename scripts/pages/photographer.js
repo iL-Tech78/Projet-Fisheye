@@ -20,9 +20,36 @@ function getPhotographerIdFromURL() {
     // si photographer.html?id=243 : params.get('id') me retourne "243".
 }
 
+async function getPhotographerMediasById(id) {
+    try {
+        const response = await fetch('data/photographers.json');
+        const data = await response.json();
+
+        // Filtrer les médias qui appartiennent à ce photographe
+        const medias = data.media.filter((m) => m.photographerId === parseInt(id));
+
+        return { media: medias };
+    } catch (error) {
+        console.error('Erreur lors de la récupération des médias du photographe:', error);
+    }
+}
+
 async function init() {
     const photographerId = getPhotographerIdFromURL();
-    const photographerData = await getPhotographerById(photographerId);
+    const data = await getPhotographerById(photographerId);
+    const { media } = await getPhotographerMediasById(photographerId);
+
+    const photographerModel = photographerTemplate(data);
+    photographerModel.getUserHeaderDOM();
+    photographerModel.getUserPriceDOM();
+
+    const mediaSection = document.querySelector('.media_section');
+
+    media.forEach((m) => {
+        const mediaModel = mediaFactory(m, data.name.replace(/\s/g, ' ')); // je remplace espace pour le chemin
+        const mediaCard = mediaModel.getMediaDOM();
+        mediaSection.appendChild(mediaCard);
+    });
 }
 
 init();

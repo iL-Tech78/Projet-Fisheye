@@ -3,7 +3,8 @@ function photographerTemplate(data) {
     // j'extrait les données dont j'ai besoin 
     const { name, portrait, city, country, tagline, price, id } = data;
 
-    const picture = `assets/photographers/${portrait}`;
+    const picture = `assets/photographers/Portrait/${portrait}`;
+
 
     function getUserCardDOM() {
         // 
@@ -43,5 +44,40 @@ function photographerTemplate(data) {
         return article;
     }
 
-    return { name, picture, getUserCardDOM }
+    function getUserHeaderDOM() {
+        const header = document.querySelector('.photograph-header');
+
+        const info = document.createElement('div');
+        info.classList.add('photograph-info');
+
+        const h1 = document.createElement('h1');
+        h1.textContent = name;
+
+        const location = document.createElement('p');
+        location.classList.add('photographer-location');
+        location.textContent = `${city}, ${country}`;
+
+        const taglineElement = document.createElement('p');
+        taglineElement.classList.add('photographer-tagline');
+        taglineElement.textContent = tagline;
+
+        const img = document.createElement('img');
+        img.setAttribute('src', picture);
+        img.setAttribute('alt', name);
+
+        info.appendChild(h1);
+        info.appendChild(location);
+        info.appendChild(taglineElement);
+
+        // Je place les éléments avant le bouton
+        header.insertBefore(info, header.querySelector('.contact_button'));
+        header.appendChild(img);
+    }
+
+    function getUserPriceDOM() {
+        const priceDiv = document.querySelector('.photographer-price');
+        priceDiv.textContent = `${price}€/jour`;
+    }
+
+    return { name, picture, getUserCardDOM, getUserHeaderDOM, getUserPriceDOM };
 }
