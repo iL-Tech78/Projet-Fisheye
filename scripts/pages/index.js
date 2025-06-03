@@ -44,3 +44,4 @@
     
     init();
     
+console.log("test page : index.js");
