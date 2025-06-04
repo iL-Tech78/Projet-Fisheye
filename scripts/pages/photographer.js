@@ -1,13 +1,9 @@
-async function getPhotographerById(id) { // fct qui me permet de récupérer l'id du photographe directement depuis l’URL.
+// fct qui me permet de récupérer l'id du photographe directement depuis l’URL.
+async function getPhotographerById(id) {
     try {
-        const response = await fetch('data/photographers.json'); // cherche les données JSON.
-        const data = await response.json(); // convertion en objet JavaScript.
-
-        // Je le photographe avec l'id correspondant grace a .find
-        const photographer = data.photographers.find((p) => p.id === parseInt(id)); // trouve le bon photographe en comparant les id.
-
-        console.log(photographer);
-
+        const response = await fetch('data/photographers.json');
+        const data = await response.json();
+        const photographer = data.photographers.find((p) => p.id === parseInt(id));
         return photographer;
     } catch (error) {
         console.error('Erreur lors de la récupération du photographe:', error);
@@ -17,43 +13,89 @@ async function getPhotographerById(id) { // fct qui me permet de récupérer l'i
 function getPhotographerIdFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('id');
-    // si photographer.html?id=243 : params.get('id') me retourne "243".
 }
 
 async function getPhotographerMediasById(id) {
     try {
         const response = await fetch('data/photographers.json');
         const data = await response.json();
-
-        // Filtrer les médias qui appartiennent à ce photographe
         const medias = data.media.filter((m) => m.photographerId === parseInt(id));
-
         return { media: medias };
     } catch (error) {
         console.error('Erreur lors de la récupération des médias du photographe:', error);
     }
 }
 
+function updateTotalLikes(increment) {
+    const totalLikesCount = document.getElementById('total-likes-count');
+    totalLikesCount.textContent = parseInt(totalLikesCount.textContent) + increment;
+}
+
+let mediaArray = []; // Ma variable pour stocker les médias globalement
+let photographerData = {}; // Ma viariable pour stocker le photographe
+
 async function init() {
     const photographerId = getPhotographerIdFromURL();
-    const data = await getPhotographerById(photographerId);
+    photographerData = await getPhotographerById(photographerId);
     const { media } = await getPhotographerMediasById(photographerId);
+    mediaArray = media; // Je stocke dans la variable globale
 
-    const photographerModel = photographerTemplate(data);
+    const photographerModel = photographerTemplate(photographerData);
     photographerModel.getUserHeaderDOM();
     photographerModel.getUserPriceDOM();
 
     const photographerNameElement = document.getElementById('photographer-name');
-    photographerNameElement.textContent = data.name;
-    
-    const mediaSection = document.querySelector('.media_section');
+    photographerNameElement.textContent = photographerData.name;
 
-    media.forEach((m) => {
-        const mediaModel = mediaFactory(m, data.name.replace(/\s/g, ' ')); // je remplace espace pour le chemin
-        const mediaCard = mediaModel.getMediaDOM();
-        mediaSection.appendChild(mediaCard);
+    initMediaDisplay('popularity'); // J'afficher trié par popularité au début
+
+    // Initiation de la lightbox après affichage des médias
+    initLightbox(mediaArray, photographerData.name);
+
+    // Initiation de ma gestion de tri
+    initSort();
+}
+
+function initSort() {
+    const sortSelect = document.getElementById('sort-select');
+
+    sortSelect.addEventListener('change', (event) => {
+        const selectedValue = event.target.value;
+        initMediaDisplay(selectedValue);
     });
 }
 
-init();
+function initMediaDisplay(criteria) {
+    const mediaSection = document.querySelector('.media_section');
+    mediaSection.innerHTML = ''; // Je vide
 
+    let sortedMedia = [...mediaArray];
+
+    switch (criteria) {
+        case 'popularity':
+            sortedMedia.sort((a, b) => b.likes - a.likes);
+            break;
+        case 'date':
+            sortedMedia.sort((a, b) => new Date(b.date) - new Date(a.date));
+            break;
+        case 'title':
+            sortedMedia.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+    }
+
+    sortedMedia.forEach((m) => {
+        const mediaModel = mediaFactory(m, photographerData.name.replace(/\s/g, ' '));
+        const mediaCard = mediaModel.getMediaDOM();
+        mediaSection.appendChild(mediaCard);
+    });
+
+    // Je recalcule le total likes après tri
+    const totalInitialLikes = sortedMedia.reduce((acc, m) => acc + m.likes, 0);
+    document.getElementById('total-likes-count').textContent = totalInitialLikes;
+    document.getElementById('price-per-day').textContent = `${photographerData.price}€ / jour`;
+
+    // Je réinitialiser la lightbox avec les nouveaux médias triés
+    initLightbox(sortedMedia, photographerData.name);
+}
+
+init();

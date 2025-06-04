@@ -210,3 +210,120 @@ form textarea {
     cursor: pointer;
 }
 /* === modal end === */
+
+/* === lightbox start === */
+#lightbox_modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.lightbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lightbox_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox_content img,
+.lightbox_content video {
+  max-width: 80%;
+  max-height: 80vh;
+}
+
+.lightbox_content h2 {
+  color: white;
+  margin-top: 20px;
+}
+
+.lightbox_close,
+.lightbox_prev,
+.lightbox_next {
+  position: absolute;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.lightbox_close {
+  top: 20px;
+  right: 30px;
+}
+
+.lightbox_prev {
+  left: 30px;
+}
+
+.lightbox_next {
+  right: 30px;
+}
+/* === lightbox start === */
+
+.photographer-likes-price {
+    position: fixed;
+    bottom: 0;
+    right: 40px;
+    background: #DB8876;
+    padding: 15px 30px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.total-likes {
+    display: flex;
+    align-items: center;
+    font-size: 26px;
+}
+
+.total-likes span {
+    margin-right: 10px;
+}
+
+.total-likes i {
+    color: black;
+}
+
+#price-per-day {
+    font-size: 24px;
+    color: black;
+}
+
+/*  */
+.filter-section {
+    margin: 30px 100px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sort-label {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#sort-select {
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px;
+}
