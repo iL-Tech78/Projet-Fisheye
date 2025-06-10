@@ -48,7 +48,6 @@ function closeLightbox() {
   document.body.style.overflow = 'auto';
 }
 
-
 function showNext() {
   currentMediaIndex = (currentMediaIndex + 1) % mediaList.length;
   displayMedia();
@@ -80,7 +79,7 @@ window.addEventListener('keydown', (e) => {
 function initLightbox(medias, photographerName) {
   mediaList = medias.map((m) => ({
     ...m,
-    photographerName
+    photographerName,
   }));
 
   const mediaElements = document.querySelectorAll('.media_section article img, .media_section article video');

@@ -1,30 +1,34 @@
-    async function getPhotographers() { // fct qui me permet de recup les données de mes photographes en local.
-        try {            
-            const response = await fetch('data/photographers.json');
-            const data = await response.json(); 
-    
-            console.log(data);
-    
-            return data; 
-        } catch (error) {
-            console.error('Erreur lors de la récupération des photographes:', error);
-        }
-    }
+// Fonction pour récupérer les photographes
+async function getPhotographers() {
+  try {
+    const response = await fetch('data/photographers.json');
+    const data = await response.json();
 
-    async function displayData(photographers) { // fct qui permet d'afficher chaque photographe
-        const photographersSection = document.querySelector(".photographer_section");
+    console.log(data);
 
-        photographers.forEach((photographer) => {
-            const photographerModel = photographerTemplate(photographer);
-            const userCardDOM = photographerModel.getUserCardDOM();
-            photographersSection.appendChild(userCardDOM);
-        });
-    }
+    return data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des photographes :', error);
+    return null;
+  }
+}
 
-    async function init() {
-        // Récupère les datas des photographes
-        const { photographers } = await getPhotographers(); // j'appelle getPhotographers() pour récupérer les données
-        displayData(photographers); // j'utilise displayData() pour afficher les photographes sur la page d’accueil
-    }
-    
-    init();
+// Fonction pour afficher les photographes
+async function displayData(photographers) {
+  const photographersSection = document.querySelector('.photographer_section');
+
+  photographers.forEach((photographer) => {
+    const photographerModel = photographerTemplate(photographer);
+    const userCardDOM = photographerModel.getUserCardDOM();
+    photographersSection.appendChild(userCardDOM);
+  });
+}
+
+// Fonction d'initialisation
+async function init() {
+  // Récupère les données des photographes
+  const { photographers } = await getPhotographers();
+  displayData(photographers);
+}
+
+init();

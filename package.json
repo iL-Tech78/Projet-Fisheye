@@ -1,0 +1,27 @@
+{
+  "name": "fisheye-iliesse-leglil",
+  "version": "1.0.0",
+  "description": "## Démarrer le projet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iL-Tech78/Projet-Fisheye.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iL-Tech78/Projet-Fisheye/issues"
+  },
+  "homepage": "https://github.com/iL-Tech78/Projet-Fisheye#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "globals": "^16.2.0"
+  }
+}
