@@ -1,11 +1,9 @@
+// Charge les données des photographes depuis le fichier JSON et à générer dynamiquement leur affichage sur la page.
 // Fonction pour récupérer les photographes
 async function getPhotographers() {
   try {
     const response = await fetch('data/photographers.json');
     const data = await response.json();
-
-    console.log(data);
-
     return data;
   } catch (error) {
     console.error('Erreur lors de la récupération des photographes :', error);
@@ -16,7 +14,6 @@ async function getPhotographers() {
 // Fonction pour afficher les photographes
 async function displayData(photographers) {
   const photographersSection = document.querySelector('.photographer_section');
-
   photographers.forEach((photographer) => {
     const photographerModel = photographerTemplate(photographer);
     const userCardDOM = photographerModel.getUserCardDOM();

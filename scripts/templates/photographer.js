@@ -12,7 +12,8 @@ function photographerTemplate(data) { // data : objet avec les infos du photogra
 
     const link = document.createElement('a');
     link.setAttribute('href', `photographer.html?id=${id}`);
-    link.setAttribute('aria-label', name); // Accessibilité
+    link.setAttribute('aria-label', name);
+
 
     const img = document.createElement('img');
     img.setAttribute('src', picture);

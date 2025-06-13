@@ -1,32 +1,34 @@
-// fct pour créer dynamiquement les médias.
+// Fonction pour mettre à jour le total de likes
 function updateTotalLikes(increment) {
   const totalLikesCount = document.getElementById('total-likes-count');
   totalLikesCount.textContent = parseInt(totalLikesCount.textContent, 10) + increment;
 }
 
-function mediaFactory(media, photographerName) { 
-  // media : json avec les photo et videos
-  // photographerName : pour avoir le bon chemin
+// Factory Pattern pour créer dynamiquement les médias
+function mediaFactory(media, photographerName) {
   const {
     title, image, video, likes,
-  } = media; // destructuration
+  } = media;
 
   const mediaFolder = `assets/photographers/${photographerName}/`;
 
   function getMediaDOM() {
-    // Creation de l'article
     const article = document.createElement('article');
-
     let mediaElement;
-    if (image) { // si l’objet media a une propriété image
+
+    if (image) {
       mediaElement = document.createElement('img');
       mediaElement.setAttribute('src', `${mediaFolder}${image}`);
       mediaElement.setAttribute('alt', title);
-    } else if (video) { // sinon si l’objet media a une propriété video
+      mediaElement.setAttribute('tabindex', '0');
+    } else if (video) {
       mediaElement = document.createElement('video');
       mediaElement.setAttribute('src', `${mediaFolder}${video}`);
       mediaElement.setAttribute('aria-label', title);
-      mediaElement.setAttribute('controls', '');
+      mediaElement.setAttribute('tabindex', '0');
+      mediaElement.setAttribute('preload', 'metadata');
+      mediaElement.setAttribute('playsinline', '');
+      mediaElement.setAttribute('muted', '');
     }
 
     // Création du footer
@@ -44,10 +46,11 @@ function mediaFactory(media, photographerName) {
 
     const likeIcon = document.createElement('i');
     likeIcon.classList.add('fas', 'fa-heart');
-    likeIcon.setAttribute('tabindex', '0'); // Accessibilité
+    likeIcon.setAttribute('tabindex', '0');
+    likeIcon.setAttribute('role', 'button');
+    likeIcon.setAttribute('aria-label', `Ajouter un like à ${title}`);
     likeIcon.style.cursor = 'pointer';
 
-    // Assemblage des éléments
     likesContainer.appendChild(likesCount);
     likesContainer.appendChild(likeIcon);
 
@@ -62,12 +65,11 @@ function mediaFactory(media, photographerName) {
     likeIcon.addEventListener('click', () => {
       if (!liked) {
         likesCount.textContent = parseInt(likesCount.textContent, 10) + 1;
-        updateTotalLikes(1); // Ajoute au total
+        updateTotalLikes(1);
         liked = true;
       }
     });
 
-    // Accessibilité clavier
     likeIcon.addEventListener('keydown', (e) => {
       if ((e.key === 'Enter' || e.key === ' ') && !liked) {
         likesCount.textContent = parseInt(likesCount.textContent, 10) + 1;
