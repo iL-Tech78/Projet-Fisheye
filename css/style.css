@@ -81,5 +81,4 @@ a:focus {
 video:focus, img:focus, i:focus {
     outline: 2px solid #000;
     outline-offset: 3px;
-  }
-  
+}

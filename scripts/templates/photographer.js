@@ -9,11 +9,17 @@ function photographerTemplate(data) { // data : objet avec les infos du photogra
 
   function getUserCardDOM() { // fct qui crée la card en page d'accueil
     const article = document.createElement('article');
+    // Accessibilité
+    article.setAttribute('tabindex', '0');
+    article.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        window.location.href = `photographer.html?id=${id}`;
+      }
+    });
 
     const link = document.createElement('a');
     link.setAttribute('href', `photographer.html?id=${id}`);
-    link.setAttribute('aria-label', name);
-
+    link.setAttribute('aria-label', `Voir le profil du photographe ${name}`);
 
     const img = document.createElement('img');
     img.setAttribute('src', picture);
@@ -36,7 +42,6 @@ function photographerTemplate(data) { // data : objet avec les infos du photogra
 
     link.appendChild(img);
     link.appendChild(h2);
-
     article.appendChild(link);
     article.appendChild(location);
     article.appendChild(tagLine);
